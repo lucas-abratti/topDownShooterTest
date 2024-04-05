@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://by05o2xy5mbqx"]
+
+[ext_resource type="Texture2D" uid="uid://b12d06318vp18" path="res://Assets/Sprites/red_body_circle.png" id="1_2qnxv"]
+[ext_resource type="Script" path="res://Assets/Scripts/Player.gd" id="1_7gbp0"]
+[ext_resource type="Texture2D" uid="uid://b6wtgeumr0u1v" path="res://Assets/Sprites/face_f.png" id="2_le3ex"]
+[ext_resource type="Texture2D" uid="uid://b7rjwpwbkv5f4" path="res://Assets/Sprites/red_hand_rock.png" id="4_6mfjl"]
+[ext_resource type="Script" path="res://Assets/Scripts/Camera2D.gd" id="5_1n6gk"]
+[ext_resource type="AudioStream" uid="uid://bkjpkwx1lgph8" path="res://Assets/Audio/sfx_wpn_laser7.wav" id="6_y282m"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r7ie5"]
+radius = 40.05
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_7gbp0")
+move_speed = 10000.0
+acceleration_speed = 0.1
+deacceleration_speed = 0.9
+max_speed = 50000.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_r7ie5")
+
+[node name="body_sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_2qnxv")
+
+[node name="expression_sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_le3ex")
+
+[node name="hand_root" type="Node2D" parent="."]
+
+[node name="hand_sprite" type="Sprite2D" parent="hand_root"]
+position = Vector2(64, 0)
+rotation = 1.1973
+texture = ExtResource("4_6mfjl")
+
+[node name="focus_point" type="Node2D" parent="hand_root"]
+position = Vector2(175, 0)
+
+[node name="shot_cooldown" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+zoom = Vector2(0.2, 0.2)
+script = ExtResource("5_1n6gk")
+target = NodePath("../hand_root/focus_point")
+
+[node name="shot_sfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_y282m")

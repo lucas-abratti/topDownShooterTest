@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ukbo4yhvbqc3"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/guns/smg.gd" id="1_55ev5"]
+[ext_resource type="AudioStream" uid="uid://2ces4p4ofouq" path="res://Assets/Audio/sfx_wpn_machinegun_loop1.wav" id="2_ajm2n"]
+
+[node name="gun" type="Node"]
+script = ExtResource("1_55ev5")
+shot_cooldown_time = 0.05
+shoot_sfx = ExtResource("2_ajm2n")
