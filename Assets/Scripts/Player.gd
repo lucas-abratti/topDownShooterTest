@@ -9,7 +9,7 @@ extends CharacterBody2D
 @onready var hand_sprite = $hand_root/hand_sprite
 @onready var expression_sprite = $expression_sprite
 @onready var shot_sfx = $shot_sfx
-@onready var gun = $gun
+@onready var equiped_gun = $gun
 @onready var shot_cooldown_timer = $shot_cooldown_timer
 
 const IDLE_FACE = preload("res://Assets/Sprites/face_f.png")
@@ -17,26 +17,33 @@ const SHOOTING_FACE = preload("res://Assets/Sprites/face_g.png")
 
 var move_dir : Vector2
 var last_dir : Vector2
-
 var aim_dir : Vector2
 var last_valid_aim_dir : Vector2
 var last_mouse_pos : Vector2
 
 var current_speed : float
 
-func _ready():
-	if (gun != null):
-		gun.setup.call(shot_cooldown_timer, shot_sfx)
+var pickup_available : bool
+var swap_to_gun : gun
+
+#func _ready():
+	#if (equiped_gun != null):
+		#equiped_gun.setup.call(shot_cooldown_timer, shot_sfx)
 
 func _process(delta):
 	movement(delta)
 	aiming()
 	shooting()
+	interacting()
 
 func shooting():
 	if (Input.is_action_pressed("shoot")):
-		gun.shoot.call(last_valid_aim_dir, hand_sprite.global_position, hand_root.rotation)
+		var bullet : Node = equiped_gun.shoot.call(last_valid_aim_dir, hand_sprite.global_position, hand_root.rotation)
+		get_tree().root.add_child(bullet)
+	
+	if (Input.is_action_just_pressed("shoot")):
 		expression_sprite.texture = SHOOTING_FACE
+	if (Input.is_action_just_released("shoot")):
 		expression_sprite.texture = IDLE_FACE
 
 func aiming():
@@ -86,3 +93,11 @@ func movement(delta):
 		current_speed = max(current_speed, 0)
 		velocity = last_dir * current_speed * delta
 	move_and_slide()
+
+func change_equipped_gun(new_gun : gun):
+	pass
+
+func interacting():
+	if(pickup_available):
+		if (Input.is_action_just_pressed("interact")):
+			print(" pickedup")

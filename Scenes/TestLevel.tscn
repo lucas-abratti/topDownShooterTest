@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dbs3ggfqvnjjq"]
+[gd_scene load_steps=7 format=3 uid="uid://dbs3ggfqvnjjq"]
 
 [ext_resource type="Texture2D" uid="uid://b76imvtx0haw6" path="res://icon.svg" id="1_x6mn3"]
 [ext_resource type="PackedScene" uid="uid://by05o2xy5mbqx" path="res://Scenes/Player.tscn" id="2_72p0w"]
 [ext_resource type="Texture2D" uid="uid://dg3swi3f5u7gp" path="res://Assets/Sprites/purple_body_square.png" id="3_jinch"]
+[ext_resource type="PackedScene" uid="uid://bnobgnc22285e" path="res://Scenes/weapon_pickup.tscn" id="4_id56h"]
+[ext_resource type="PackedScene" uid="uid://ukbo4yhvbqc3" path="res://Scenes/Guns/smg.tscn" id="5_mld1i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mn1k7"]
 size = Vector2(80, 80)
@@ -14,6 +16,7 @@ scale = Vector2(5, 5)
 texture = ExtResource("1_x6mn3")
 
 [node name="Player" parent="." instance=ExtResource("2_72p0w")]
+collision_mask = 9
 
 [node name="wall" type="StaticBody2D" parent="."]
 position = Vector2(498, -38)
@@ -24,3 +27,7 @@ texture = ExtResource("3_jinch")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="wall"]
 shape = SubResource("RectangleShape2D_mn1k7")
+
+[node name="weapon_pickup" parent="." instance=ExtResource("4_id56h")]
+position = Vector2(124, 4)
+item = ExtResource("5_mld1i")

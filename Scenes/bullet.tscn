@@ -1,33 +1,35 @@
-[gd_scene load_steps=4 format=3 uid="uid://d371vif4bqijl"]
+[gd_scene load_steps=5 format=3 uid="uid://d371vif4bqijl"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/bullet.gd" id="1_s1hdv"]
+[ext_resource type="Script" path="res://Assets/Scripts/ammunition.gd" id="1_jevf1"]
 [ext_resource type="Texture2D" uid="uid://cjgcypcmxak7e" path="res://Assets/Sprites/yellow_body_rhombus.png" id="1_vvwgt"]
+[ext_resource type="PackedScene" uid="uid://d04v3t6dsgf4n" path="res://Scenes/impact_particles.tscn" id="2_d2w74"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uau2e"]
 height = 40.0
 
-[node name="Bullet" type="Node2D"]
-script = ExtResource("1_s1hdv")
-speed = 800.0
+[node name="Bullet" type="Node2D" node_paths=PackedStringArray("impact_detector", "bullet_sprite")]
+script = ExtResource("1_jevf1")
+lifespan_time = 2.0
+impact_detector = NodePath("impact_detector")
+bullet_sprite = NodePath("bullet_sprite")
+speed = 1000.0
+impact_particles_scene = ExtResource("2_d2w74")
 
 [node name="bullet_sprite" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.25)
 texture = ExtResource("1_vvwgt")
 
-[node name="lifespan_timer" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
-autostart = true
-
 [node name="hitbox" type="Area2D" parent="."]
-collision_layer = 4
+collision_layer = 8
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_uau2e")
 
 [node name="impact_detector" type="Area2D" parent="."]
-collision_layer = 4
+collision_layer = 0
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="impact_detector"]
 rotation = -1.5708

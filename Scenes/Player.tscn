@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://by05o2xy5mbqx"]
+[gd_scene load_steps=10 format=3 uid="uid://by05o2xy5mbqx"]
 
 [ext_resource type="Texture2D" uid="uid://b12d06318vp18" path="res://Assets/Sprites/red_body_circle.png" id="1_2qnxv"]
 [ext_resource type="Script" path="res://Assets/Scripts/Player.gd" id="1_7gbp0"]
@@ -6,7 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://b7rjwpwbkv5f4" path="res://Assets/Sprites/red_hand_rock.png" id="4_6mfjl"]
 [ext_resource type="Script" path="res://Assets/Scripts/Camera2D.gd" id="5_1n6gk"]
 [ext_resource type="AudioStream" uid="uid://bfl533ach57iy" path="res://Assets/Audio/sfx_wpn_laser6.wav" id="6_mbwip"]
-[ext_resource type="PackedScene" uid="uid://ukbo4yhvbqc3" path="res://Scenes/Guns/smg.tscn" id="7_8jleo"]
+[ext_resource type="PackedScene" uid="uid://ukbo4yhvbqc3" path="res://Scenes/Guns/smg.tscn" id="7_8oogr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tp57t"]
+radius = 40.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r7ie5"]
 radius = 40.05
@@ -18,6 +21,12 @@ move_speed = 10000.0
 acceleration_speed = 0.1
 deacceleration_speed = 0.9
 max_speed = 50000.0
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_tp57t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_r7ie5")
@@ -52,4 +61,4 @@ script = ExtResource("5_1n6gk")
 target_a = NodePath("../hand_root/focus_point")
 target_b = NodePath("..")
 
-[node name="gun" parent="." instance=ExtResource("7_8jleo")]
+[node name="gun" parent="." instance=ExtResource("7_8oogr")]
